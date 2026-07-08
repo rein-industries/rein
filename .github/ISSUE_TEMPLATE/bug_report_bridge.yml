@@ -1,7 +1,7 @@
-name: Bug report — mobile app
-description: Something in the Rein mobile app isn't working right.
-title: "[App bug]: "
-labels: ["bug", "app"]
+name: Bug report — bridge / CLI
+description: Something in the rein bridge daemon or the `rein` CLI isn't working right.
+title: "[Bridge bug]: "
+labels: ["bug", "bridge"]
 body:
   - type: markdown
     attributes:
@@ -29,8 +29,8 @@ body:
       label: Steps to reproduce
       description: How can we make it happen again?
       placeholder: |
-        1. Go to ...
-        2. Tap ...
+        1. Run ...
+        2. Then ...
         3. See ...
     validations:
       required: false
@@ -38,7 +38,18 @@ body:
     id: environment
     attributes:
       label: Environment
-      description: Filled in automatically when you report from the app. No need to edit.
+      description: "`rein version`, how you installed (curl / npm / brew), OS + arch."
+      render: text
+      placeholder: |
+        rein 0.1.0 (installed via curl)
+        macOS 15.5 arm64
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: The tail of `~/.reins/bridge.log` (or `rein logs --tail 100`). Never paste tokens or transcript contents.
       render: text
     validations:
       required: false
