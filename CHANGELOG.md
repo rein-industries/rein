@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.22] - 2026-07-09
+
+### Changes
+
+- Surface free-plan machine limit as a clear sign-in error
+
 ## [0.1.21] - 2026-07-09
 
 ### Changes
