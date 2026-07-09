@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.9] - 2026-07-09
+
+### Changes
+
+- Ship Expo 57, terminal reclaim, and the biome fixes that redded CI
+- Keep sessions honest through background-task resumes; fix auto-continue vetoes
+
 ## [0.1.8] - 2026-07-09
 
 ### Changes
