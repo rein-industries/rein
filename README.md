@@ -16,6 +16,13 @@ Start at your desk, pick up anywhere.
 
 Works with **Claude Code** · **Codex** · **Gemini** · **opencode** · **Grok**
 
+<br>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/app-dark.png">
+  <img src="docs/assets/app-light.png" alt="The Rein workspace: agents across your machines, sorted by what needs you." width="340">
+</picture>
+
 </div>
 
 ---
