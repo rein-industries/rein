@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.20] - 2026-07-09
+
+### Changes
+
+- Make rein update interruptible; keep spinner on one line
+
 ## [0.1.19] - 2026-07-09
 
 ### Changes
