@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.5] - 2026-07-09
+
+### Changes
+
+- Remove image section from README
+
 ## [0.1.4] - 2026-07-09
 
 ### Changes
