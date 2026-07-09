@@ -52,9 +52,10 @@ and x64), verified against the release `SHA256SUMS`. No Node, Bun, or build
 toolchain required.
 
 The install script also sets up an always-on background service (macOS
-LaunchAgent / Linux systemd user unit) and, when run in a terminal, launches
-`rein setup`: sign in, then pair your phone from a live QR panel. With npm, bun,
-or Homebrew, run `rein setup` once after install.
+LaunchAgent / Linux systemd user unit) and automatically launches setup in a
+terminal (including under `curl | sh`): sign in, then pair your phone from a
+live QR panel. After that, run `rein` any time to use the CLI. With npm, bun, or
+Homebrew, run `rein setup` once after install.
 
 **Upgrades** follow the channel you installed from: `rein update` (curl),
 `npm i -g @rein-industries/rein@latest` (npm), or `brew upgrade rein` (Homebrew).

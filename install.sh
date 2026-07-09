@@ -3,7 +3,8 @@
 #
 # Downloads the latest released rein binary for this machine, verifies its
 # checksum, installs it under ~/.reins/bin with its native node-pty sidecars,
-# links `rein` onto your PATH, starts the bridge, and prints the pairing code.
+# links `rein` onto your PATH, starts the bridge, and launches interactive
+# setup (sign-in + pairing). After setup, run `rein` any time to use the CLI.
 #
 # It never touches API keys and pairs only with your phone. Re-running upgrades
 # in place. Override behaviour with env vars:
@@ -12,7 +13,8 @@
 #   REINS_RELEASE_BASE  full base URL for assets (overrides repo/version)
 #   REINS_INSTALL_DIR   where the binary + sidecars land; default: ~/.reins/bin
 #   REINS_BIN_DIR       where `rein` is linked; default: /usr/local/bin or ~/.local/bin
-#   REINS_NO_START=1    install only; don't start the bridge or print pairing
+#   REINS_NO_START=1    install only; don't start the bridge or run setup
+#   REINS_NO_SETUP=1    install + start the service; skip interactive setup
 set -eu
 
 # Release tarballs + install.sh live on the public rein-industries/rein repo.
@@ -78,18 +80,26 @@ main() {
 
   finish "$link_dir"
 
-  # Interactive post-install: forced sign-in (Grok-style) → pairing panel.
-  # Headless/CI (no TTY on stdin) just leaves the service running.
-  if [ -t 0 ] && [ -t 1 ] && [ "${REINS_NO_SETUP:-0}" != "1" ]; then
-    printf '\n'
-    "$rein" setup || true
+  # Interactive post-install: sign-in → pairing panel, then leave the CLI ready.
+  # Under `curl | sh`, stdin is the download pipe (not a TTY) even when the user
+  # is at a real terminal — open /dev/tty so setup still starts automatically.
+  if [ "${REINS_NO_SETUP:-0}" != "1" ] && [ -t 1 ] && can_talk_to_tty; then
+    printf '\n  %bStarting setup…%b\n\n' "$bold" "$reset"
+    if [ -t 0 ]; then
+      "$rein" setup || true
+    else
+      "$rein" setup </dev/tty || true
+    fi
   # Anchored: whoami prints "signed in: …" when linked but "Not signed in." when
   # not, and an unanchored grep matches both.
   elif "$rein" whoami 2>/dev/null | grep -q '^signed in:'; then
     printf '\n  %bPair with the Rein app:%b\n' "$bold" "$reset"
     "$rein" token 2>/dev/null || true
+    printf '\n  Run %brein%b any time to use the CLI.\n' "$bold" "$reset"
   else
-    printf '\n  %bSign in to finish setup:%b  rein setup\n' "$bold" "$reset"
+    printf '\n  %bNext:%b run %brein setup%b to sign in and pair your phone.\n' \
+      "$bold" "$reset" "$bold" "$reset"
+    printf '  After that, run %brein%b any time to use the CLI.\n' "$bold" "$reset"
   fi
 }
 
@@ -203,6 +213,13 @@ finish() {
     *) printf '\n  %b!%b %s is not on your PATH. Add:\n      export PATH="%s:$PATH"\n' \
          "$red" "$reset" "$link_dir" "$link_dir" ;;
   esac
+}
+
+# True when we can drive an interactive setup UI. Stdin may be a pipe
+# (`curl | sh`); /dev/tty is the user's real terminal when one exists.
+can_talk_to_tty() {
+  [ -t 0 ] && return 0
+  [ -c /dev/tty ] && [ -r /dev/tty ] && [ -w /dev/tty ]
 }
 
 main "$@"
