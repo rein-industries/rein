@@ -178,23 +178,7 @@ runtime files, and leaves your config and session history unless you pass
 ## Supported agents
 
 Rein drives the official CLIs over the
-[Agent Client Protocol](https://agentclientprotocol.com) (ACP). Install at
-least one on the bridge machine and log in with your subscription:
-
-| Agent | Log in with | Driven via |
-| --- | --- | --- |
-| **Claude Code** | `claude` → `/login` | `claude-agent-acp` |
-| **Codex** | `codex login` | `codex-acp` |
-| **Gemini CLI** | `gemini` → sign in | `gemini --acp` |
-| **opencode** | `opencode auth login` | `opencode acp` |
-| **Grok CLI** | `grok login` | `grok agent stdio` |
-
-Claude Code and Codex are driven through thin ACP wrapper CLIs; install them
-once on the bridge machine:
-
-```sh
-npm i -g @agentclientprotocol/claude-agent-acp @agentclientprotocol/codex-acp
-```
+[Agent Client Protocol](https://agentclientprotocol.com) (ACP).
 
 Every agent gets the same treatment in the app: model and effort pickers,
 permission modes, slash commands, streaming thinking and tool output, interrupt
@@ -280,13 +264,6 @@ Please search
 [existing issues](https://github.com/rein-industries/rein/issues) first, keep
 one issue per report, and never paste pairing tokens, access tokens, or session
 transcripts. We never need your code to fix a bug.
-
-## Source
-
-Rein is developed in a private monorepo;
-[github.com/rein-industries/rein](https://github.com/rein-industries/rein) is
-its public home: bridge releases, `install.sh`, the changelog, and the issue
-tracker. In the source tree, contributor docs live in `docs/DEVELOPMENT.md`.
 
 ---
 
