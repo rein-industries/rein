@@ -12,8 +12,9 @@
 #   REINS_REPO          GitHub owner/repo; default: rein-industries/rein
 #   REINS_RELEASE_BASE  full base URL for assets (overrides repo/version)
 #   REINS_INSTALL_DIR   where the binary + sidecars land; default: ~/.reins/bin
-#   REINS_BIN_DIR       where `rein` is linked; default: first writable dir on
-#                       PATH, else /opt/homebrew/bin, /usr/local/bin, ~/.local/bin
+#   REINS_BIN_DIR       where `rein` is linked; default: stable dirs first
+#                       (~/.local/bin, Homebrew), then first writable PATH
+#                       entry that is not a version-manager bin (nvm/fnm/…)
 #   REINS_NO_START=1    install only; don't start the bridge or run setup
 #   REINS_NO_SETUP=1    install + start the service; skip interactive setup
 set -eu
@@ -89,25 +90,25 @@ main() {
   esac
 
   # Interactive post-install: sign-in → pairing panel, then leave the CLI ready.
-  # Under `curl | sh`, stdin is the download pipe (not a TTY) even when the user
-  # is at a real terminal. Reattach the *shell's* stdin to /dev/tty so `rein setup`
-  # inherits a normal interactive tty (a per-command `</dev/tty` redirect is not
-  # enough for the compiled binary's raw-mode / alt-screen path — it could print
-  # the folder-consent note and then appear to hang).
+  #
+  # Under `curl | sh`, this shell's stdin IS the script pipe. Never remount the
+  # shell's own fd 0 onto /dev/tty (`exec </dev/tty`): after main returns the
+  # shell still needs one more read() to see EOF, and a TTY never delivers it —
+  # so the installer hangs after "Setup complete." eating keystrokes as script
+  # source. Redirect only the setup *command* onto /dev/tty; leave the shell's
+  # stdin on the pipe so it can exit cleanly. (rein's TUI opens /dev/tty itself
+  # for raw keys; the redirect only needs to make process.stdin.isTTY true.)
   if [ "${REINS_NO_SETUP:-0}" != "1" ] && [ -t 1 ] && can_talk_to_tty; then
     printf '\n  %bStarting setup…%b\n\n' "$bold" "$reset"
-    if [ ! -t 0 ]; then
-      # exec replaces this shell's fd 0; we're at the end of main so it's fine.
-      if ! exec </dev/tty; then
-        printf '  %bNext:%b run %brein setup%b to sign in and pair your phone.\n' \
-          "$bold" "$reset" "$bold" "$reset"
-        printf '  After that, run %brein%b any time to use the CLI.\n' "$bold" "$reset"
-        return 0
-      fi
+    if [ -t 0 ]; then
+      setup_ok=0
+      "$rein" setup || setup_ok=$?
+    else
+      # Per-command redirect — do not touch the installer's shell stdin.
+      setup_ok=0
+      "$rein" setup </dev/tty || setup_ok=$?
     fi
-    # After exec </dev/tty, stdin is a normal interactive tty — same rich
-    # sign-in + pairing screens as a manual `rein setup` (alt-screen, p/q keys).
-    if ! "$rein" setup; then
+    if [ "$setup_ok" -ne 0 ]; then
       printf '\n  %bSetup did not finish.%b Run %brein setup%b to try again.\n' \
         "$bold" "$reset" "$bold" "$reset"
     fi
@@ -227,40 +228,81 @@ verify_checksum() {
 #
 # Order:
 #   1. REINS_BIN_DIR override
-#   2. first absolute, writable entry already on PATH
-#   3. common package prefixes (Homebrew Intel/ARM, /usr/local)
-#   4. ~/.local/bin (XDG; often missing from default macOS PATH)
+#   2. stable candidates already on PATH (~/.local/bin, Homebrew, /usr/local)
+#   3. first absolute, writable PATH entry that is not a version-manager bin
+#      (nvm/fnm/asdf/… disappear when that runtime version is uninstalled)
+#   4. common package prefixes if writable, else ~/.local/bin
+#
+# True when $1 looks like a version-manager or tool-managed bin dir. Linking
+# `rein` there makes it vanish on `nvm use` / uninstall of that Node version.
+is_volatile_bin_dir() {
+  case "$1" in
+    */.nvm/*|*/nvm/versions/*|*/.fnm/*|*/.local/share/fnm/*|*/.asdf/*|\
+    */.volta/*|*/.nodenv/*|*/.n/*|*/.local/share/mise/*|*/mise/installs/*|\
+    */.pyenv/*|*/.rbenv/*|*/.jenv/*|*/.sdkman/*|*/node_modules/*)
+      return 0
+      ;;
+  esac
+  return 1
+}
+
+# True when $1 is already on PATH (exact entry match).
+dir_on_path() {
+  case ":$PATH:" in
+    *":$1:"*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+# Print $1 if it is a usable link target: absolute, not volatile, and either
+# writable or creatable under a writable parent. Returns 0 on success.
+try_bin_dir() {
+  dir="$1"
+  [ -n "$dir" ] || return 1
+  case "$dir" in
+    /*) ;;
+    *) return 1 ;;
+  esac
+  is_volatile_bin_dir "$dir" && return 1
+  if [ -d "$dir" ] && [ -w "$dir" ]; then
+    echo "$dir"
+    return 0
+  fi
+  # Listed on PATH but missing (common for ~/.local/bin) — createable parent.
+  if [ ! -e "$dir" ]; then
+    parent=$(dirname "$dir")
+    if [ -d "$parent" ] && [ -w "$parent" ]; then
+      echo "$dir"
+      return 0
+    fi
+  fi
+  return 1
+}
+
 choose_bin_dir() {
   if [ -n "${REINS_BIN_DIR:-}" ]; then echo "$REINS_BIN_DIR"; return; fi
+
+  # Prefer durable locations when they are already on PATH (or can be created
+  # there). First-writable-on-PATH alone used to pick nvm's active Node bin.
+  for dir in "$HOME/.local/bin" /opt/homebrew/bin /usr/local/bin; do
+    if dir_on_path "$dir" && try_bin_dir "$dir"; then
+      return
+    fi
+  done
 
   old_ifs=$IFS
   IFS=:
   # shellcheck disable=SC2086 # intentional word-split of PATH
   for dir in $PATH; do
     IFS=$old_ifs
-    [ -n "$dir" ] || continue
-    case "$dir" in
-      /*) ;;
-      *) continue ;; # skip relative PATH junk
-    esac
-    if [ -d "$dir" ] && [ -w "$dir" ]; then
-      echo "$dir"
+    if try_bin_dir "$dir"; then
       return
-    fi
-    # Listed on PATH but missing (common for ~/.local/bin) — createable parent.
-    if [ ! -e "$dir" ]; then
-      parent=$(dirname "$dir")
-      if [ -d "$parent" ] && [ -w "$parent" ]; then
-        echo "$dir"
-        return
-      fi
     fi
   done
   IFS=$old_ifs
 
   for dir in /opt/homebrew/bin /usr/local/bin; do
-    if [ -d "$dir" ] && [ -w "$dir" ]; then
-      echo "$dir"
+    if try_bin_dir "$dir"; then
       return
     fi
   done

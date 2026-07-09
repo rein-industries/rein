@@ -3,6 +3,14 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.25] - 2026-07-09
+
+### Changes
+
+- Fix choose_bin_dir test PATH to use absolute entries
+- Fix install test host-dependence and unexport wait helper
+- Fix curl|sh installer hang and double bridge start
+
 ## [0.1.24] - 2026-07-09
 
 ### Changes
