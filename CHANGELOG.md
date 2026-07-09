@@ -3,6 +3,14 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.21] - 2026-07-09
+
+### Changes
+
+- Fix rein setup/run hanging the terminal on quit (Bun tty bugs)
+- Site: update social meta tags to Rein: Coding Agent, Anywhere
+- Site: make dither motion visible on mobile and smooth shot loading
+
 ## [0.1.20] - 2026-07-09
 
 ### Changes
