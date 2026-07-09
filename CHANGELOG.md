@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.7] - 2026-07-09
+
+### Changes
+
+- Self-provision the claude/codex ACP shims
+- Point APNs Live Activity topic at the production bundle id
+
 ## [0.1.6] - 2026-07-09
 
 ### Changes

@@ -176,7 +176,9 @@ runtime files, and leaves your config and session history unless you pass
 ## Supported agents
 
 Rein drives the official CLIs over the
-[Agent Client Protocol](https://agentclientprotocol.com) (ACP).
+[Agent Client Protocol](https://agentclientprotocol.com) (ACP). There is
+nothing extra to install: if an agent's CLI is on your machine and signed in,
+the bridge sets up the rest itself.
 
 Every agent gets the same treatment in the app: model and effort pickers,
 permission modes, slash commands, streaming thinking and tool output, interrupt
