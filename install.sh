@@ -1,5 +1,5 @@
 #!/bin/sh
-# rein bridge installer —  curl -fsSL rein.build | sh
+# rein installer —  curl -fsSL rein.build | sh
 #
 # Downloads the latest released rein binary for this machine, verifies its
 # checksum, installs it under ~/.reins/bin with its native node-pty sidecars,
@@ -15,7 +15,7 @@
 #   REINS_NO_START=1    install only; don't start the bridge or print pairing
 set -eu
 
-# Artifacts live in the PUBLIC releases repo (source stays private).
+# Release tarballs + install.sh live on the public rein-industries/rein repo.
 REINS_REPO="${REINS_REPO:-rein-industries/rein}"
 REINS_VERSION="${REINS_VERSION:-latest}"
 INSTALL_DIR="${REINS_INSTALL_DIR:-$HOME/.reins/bin}"
@@ -31,7 +31,7 @@ main() {
   asset="rein-${os}-${arch}.tar.gz"
   base="$(release_base)"
 
-  printf '\n  %brein bridge%b  %s/%s\n\n' "$bold" "$reset" "$os" "$arch"
+  printf '\n  %brein%b  %s/%s\n\n' "$bold" "$reset" "$os" "$arch"
 
   tmp="$(mktemp -d "${TMPDIR:-/tmp}/rein-install.XXXXXX")"
   trap 'rm -rf "$tmp"' EXIT INT TERM
@@ -54,25 +54,37 @@ main() {
 
   if [ "${REINS_NO_START:-0}" = "1" ]; then
     link_cli "$rein" "$link_dir" "$link"
-    say "Installed. Start it later with: ${bold}rein start${reset}"
+    say "Installed. Finish setup later with: ${bold}rein setup${reset}"
     finish "$link_dir"
     return
   fi
 
-  if [ "$os" = "darwin" ]; then
-    # rein install creates the LaunchAgent, links the CLI, and starts the bridge.
-    "$rein" install --cli-link "$link" >/dev/null 2>&1 || "$rein" install --cli-link "$link"
+  # Always-on service (LaunchAgent / systemd --user) + CLI link.
+  link_cli "$rein" "$link_dir" "$link"
+  if "$rein" install --cli-link "$link" >/dev/null 2>&1; then
+    say "✓ service installed"
   else
-    link_cli "$rein" "$link_dir" "$link"
-    "$rein" stop >/dev/null 2>&1 || true
-    "$rein" start >/dev/null 2>&1 || err "bridge failed to start — see ~/.reins/bridge.log"
+    # install may have printed errors; retry without silencing so the user sees them
+    "$rein" install --cli-link "$link" || true
   fi
-  say "✓ bridge running"
 
   finish "$link_dir"
 
-  printf '\n  %bPair with the Rein app:%b\n' "$bold" "$reset"
-  "$rein" token 2>/dev/null || true
+  # Interactive post-install: forced sign-in (Grok-style) → pairing panel.
+  # Headless/CI (no TTY) just leaves the service running.
+  if [ -t 0 ] && [ -t 1 ] && [ "${REINS_NO_SETUP:-0}" != "1" ]; then
+    printf '\n'
+    "$rein" setup || true
+  else
+    "$rein" start >/dev/null 2>&1 || true
+    say "✓ bridge running"
+    if "$rein" whoami 2>/dev/null | grep -q 'signed in'; then
+      printf '\n  %bPair with the Rein app:%b\n' "$bold" "$reset"
+      "$rein" token 2>/dev/null || true
+    else
+      printf '\n  %bSign in to finish setup:%b  rein setup\n' "$bold" "$reset"
+    fi
+  fi
 }
 
 detect_os() {
