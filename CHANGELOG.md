@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.8] - 2026-07-09
+
+### Changes
+
+- Development (#44)
+
 ## [0.1.7] - 2026-07-09
 
 ### Changes
