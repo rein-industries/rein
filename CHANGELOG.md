@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.2] - 2026-07-09
+
+### Changes
+
+- Fix main check: prune dead exports flagged by knip
+- Gate releases on bridge-relevant changes
+
 ## [0.1.1] - 2026-07-09
 
 ### Changes
