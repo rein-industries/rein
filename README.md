@@ -14,8 +14,6 @@ Start at your desk, pick up anywhere.
 
 [**rein.build**](https://rein.build) · [**Download the app**](https://rein.build) · [**Changelog**](https://github.com/rein-industries/rein/blob/main/CHANGELOG.md) · [**npm**](https://www.npmjs.com/package/@rein-industries/rein)
 
-Works with **Claude Code** · **Codex** · **Gemini** · **opencode** · **Grok**
-
 </div>
 
 ---
