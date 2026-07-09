@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.14] - 2026-07-09
+
+### Changes
+
+- Tailor PATH install tip to the login shell (zsh/bash/fish)
+- Prefer a PATH bin dir for install; soften PATH note
+
 ## [0.1.13] - 2026-07-09
 
 ### Changes

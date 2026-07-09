@@ -12,7 +12,8 @@
 #   REINS_REPO          GitHub owner/repo; default: rein-industries/rein
 #   REINS_RELEASE_BASE  full base URL for assets (overrides repo/version)
 #   REINS_INSTALL_DIR   where the binary + sidecars land; default: ~/.reins/bin
-#   REINS_BIN_DIR       where `rein` is linked; default: /usr/local/bin or ~/.local/bin
+#   REINS_BIN_DIR       where `rein` is linked; default: first writable dir on
+#                       PATH, else /opt/homebrew/bin, /usr/local/bin, ~/.local/bin
 #   REINS_NO_START=1    install only; don't start the bridge or run setup
 #   REINS_NO_SETUP=1    install + start the service; skip interactive setup
 set -eu
@@ -220,18 +221,108 @@ verify_checksum() {
   fi
 }
 
+# Where to put the `rein` symlink. Prefer a directory already on PATH so a
+# fresh install doesn't print a scary PATH warning and `rein` works in the
+# next terminal without editing shell config.
+#
+# Order:
+#   1. REINS_BIN_DIR override
+#   2. first absolute, writable entry already on PATH
+#   3. common package prefixes (Homebrew Intel/ARM, /usr/local)
+#   4. ~/.local/bin (XDG; often missing from default macOS PATH)
 choose_bin_dir() {
   if [ -n "${REINS_BIN_DIR:-}" ]; then echo "$REINS_BIN_DIR"; return; fi
-  if [ -w /usr/local/bin ] 2>/dev/null; then echo /usr/local/bin; return; fi
+
+  old_ifs=$IFS
+  IFS=:
+  # shellcheck disable=SC2086 # intentional word-split of PATH
+  for dir in $PATH; do
+    IFS=$old_ifs
+    [ -n "$dir" ] || continue
+    case "$dir" in
+      /*) ;;
+      *) continue ;; # skip relative PATH junk
+    esac
+    if [ -d "$dir" ] && [ -w "$dir" ]; then
+      echo "$dir"
+      return
+    fi
+    # Listed on PATH but missing (common for ~/.local/bin) — createable parent.
+    if [ ! -e "$dir" ]; then
+      parent=$(dirname "$dir")
+      if [ -d "$parent" ] && [ -w "$parent" ]; then
+        echo "$dir"
+        return
+      fi
+    fi
+  done
+  IFS=$old_ifs
+
+  for dir in /opt/homebrew/bin /usr/local/bin; do
+    if [ -d "$dir" ] && [ -w "$dir" ]; then
+      echo "$dir"
+      return
+    fi
+  done
   echo "$HOME/.local/bin"
 }
 
+# Login shell the *user* runs interactively ($SHELL), not the interpreter
+# running this script (`curl | sh` is always sh/dash/bash-as-sh).
+detect_login_shell() {
+  basename "${SHELL:-}"
+}
+
+# Print a PATH-hint line + optional "append to your rc" example tailored to
+# the login shell. Fish uses different syntax than bash/zsh.
 finish() {
   link_dir="$1"
   case ":$PATH:" in
     *":$link_dir:"*) : ;;
-    *) printf '\n  %b!%b %s is not on your PATH. Add:\n      export PATH="%s:$PATH"\n' \
-         "$red" "$reset" "$link_dir" "$link_dir" ;;
+    *)
+      # Tip, not an error — install succeeded; the next shell just won't see
+      # `rein` until PATH is updated. Soft tone so it doesn't read as failure
+      # mid-setup (the old red "!" looked like a crash).
+      printf '\n  %bNote:%b %s is not on your PATH yet.\n' "$bold" "$reset" "$link_dir"
+      shell_name=$(detect_login_shell)
+      case "$shell_name" in
+        fish)
+          # fish_add_path updates the universal PATH (persists); no config edit needed.
+          printf '  Run this once so %brein%b works in new fish terminals:\n' \
+            "$bold" "$reset"
+          printf '      fish_add_path %s\n' "$link_dir"
+          ;;
+        zsh)
+          printf '  Add this line to your shell config so %brein%b works in new terminals:\n' \
+            "$bold" "$reset"
+          printf '      export PATH="%s:$PATH"\n' "$link_dir"
+          printf '  (for example: echo '\''export PATH="%s:$PATH"'\'' >> ~/.zshrc)\n' \
+            "$link_dir"
+          ;;
+        bash)
+          printf '  Add this line to your shell config so %brein%b works in new terminals:\n' \
+            "$bold" "$reset"
+          printf '      export PATH="%s:$PATH"\n' "$link_dir"
+          # macOS bash is login-shell heavy → .bash_profile; Linux more often .bashrc
+          if [ "$(uname -s 2>/dev/null)" = Darwin ]; then
+            rc="$HOME/.bash_profile"
+          else
+            rc="$HOME/.bashrc"
+          fi
+          printf '  (for example: echo '\''export PATH="%s:$PATH"'\'' >> %s)\n' \
+            "$link_dir" "$rc"
+          ;;
+        *)
+          printf '  Add this line to your shell config so %brein%b works in new terminals:\n' \
+            "$bold" "$reset"
+          printf '      export PATH="%s:$PATH"\n' "$link_dir"
+          if [ -n "$shell_name" ]; then
+            printf '  %b(detected login shell: %s — pick the matching rc file)%b\n' \
+              "$dim" "$shell_name" "$reset"
+          fi
+          ;;
+      esac
+      ;;
   esac
 }
 
