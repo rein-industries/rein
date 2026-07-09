@@ -86,7 +86,7 @@ bridge installs on macOS and Linux.
 
 Three ways a phone can meet a bridge:
 
-- **QR.** The pairing panel (`rein run`, or `rein token` any time) prints a
+- **QR.** The pairing panel (`rein setup`, or `rein run`) prints a
   `reins://` QR encoding the bridge address, a one-time pairing secret, and the
   TLS cert fingerprint. Scan it in the app.
 - **Short code.** The same panel shows a short rotating code for when the QR
@@ -127,7 +127,7 @@ agent's own CLI back on the desktop.
 ```
 
 - **Pair once.** Pairing exchanges a one-time secret; each phone gets its own
-  revocable credential. Rotate it any time with `rein token --reset`.
+  revocable credential. Rotate it any time with `rein setup --reset`.
 - **Encrypted end to end.** On your own network, sessions ride a direct `wss://`
   socket secured by a certificate the phone pins by fingerprint. Away from it,
   they ride a DTLS-encrypted WebRTC channel.
@@ -154,8 +154,8 @@ rein stop              # graceful stop
 rein restart           # stop then start
 rein status --json     # machine-readable status
 rein logs --tail 100   # bridge logs
-rein token             # re-print the pairing QR / short code
-rein token --reset     # rotate the pairing token
+rein setup             # re-open pairing (sign-in if needed) + QR / short code
+rein setup --reset     # rotate the durable pairing token
 rein login             # sign this machine into your account
 rein logout            # sign out and revoke the machine credential
 rein whoami            # show the signed-in account

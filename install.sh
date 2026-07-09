@@ -114,9 +114,9 @@ main() {
   # Anchored: whoami prints "signed in: …" when linked but "Not signed in." when
   # not, and an unanchored grep matches both.
   elif "$rein" whoami 2>/dev/null | grep -q '^signed in:'; then
-    printf '\n  %bPair with the Rein app:%b\n' "$bold" "$reset"
-    "$rein" token 2>/dev/null || true
-    printf '\n  Run %brein%b any time to use the CLI.\n' "$bold" "$reset"
+    printf '\n  %bPair with the Rein app:%b run %brein setup%b\n' \
+      "$bold" "$reset" "$bold" "$reset"
+    printf '  Run %brein%b any time to use the CLI.\n' "$bold" "$reset"
   else
     printf '\n  %bNext:%b run %brein setup%b to sign in and pair your phone.\n' \
       "$bold" "$reset" "$bold" "$reset"

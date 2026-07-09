@@ -3,6 +3,14 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.16] - 2026-07-09
+
+### Changes
+
+- Unexport pairing-viewer helpers so knip (and release check) pass
+- Bump GitHub Actions off deprecated Node 20 runtimes
+- Fix pairing UI lag; drop rein token in favor of setup
+
 ## [0.1.15] - 2026-07-09
 
 ### Changes
