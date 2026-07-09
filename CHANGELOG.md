@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.24] - 2026-07-09
+
+### Changes
+
+- Fix rein setup hanging the terminal after quit
+
 ## [0.1.23] - 2026-07-09
 
 ### Changes
