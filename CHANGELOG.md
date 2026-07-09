@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.15] - 2026-07-09
+
+### Changes
+
+- Restore rich setup/pairing TUI under curl | sh
+- Gate releases on check in one main pipeline
+
 ## [0.1.14] - 2026-07-09
 
 ### Changes

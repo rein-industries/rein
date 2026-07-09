@@ -105,9 +105,9 @@ main() {
         return 0
       fi
     fi
-    # REINS_INSTALLER=1 → setup uses line-oriented sign-in/pairing (no alt-screen).
-    # Full-screen TUIs are flaky under a pipe-fed installer even after reattach.
-    if ! REINS_INSTALLER=1 "$rein" setup; then
+    # After exec </dev/tty, stdin is a normal interactive tty — same rich
+    # sign-in + pairing screens as a manual `rein setup` (alt-screen, p/q keys).
+    if ! "$rein" setup; then
       printf '\n  %bSetup did not finish.%b Run %brein setup%b to try again.\n' \
         "$bold" "$reset" "$bold" "$reset"
     fi
