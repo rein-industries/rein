@@ -80,15 +80,35 @@ main() {
 
   finish "$link_dir"
 
+  # So `rein` works for any later steps in this shell (and so the PATH note is
+  # accurate if the user pastes the export into the same session).
+  case ":$PATH:" in
+    *":$link_dir:"*) : ;;
+    *) PATH="$link_dir:$PATH"; export PATH ;;
+  esac
+
   # Interactive post-install: sign-in → pairing panel, then leave the CLI ready.
   # Under `curl | sh`, stdin is the download pipe (not a TTY) even when the user
-  # is at a real terminal — open /dev/tty so setup still starts automatically.
+  # is at a real terminal. Reattach the *shell's* stdin to /dev/tty so `rein setup`
+  # inherits a normal interactive tty (a per-command `</dev/tty` redirect is not
+  # enough for the compiled binary's raw-mode / alt-screen path — it could print
+  # the folder-consent note and then appear to hang).
   if [ "${REINS_NO_SETUP:-0}" != "1" ] && [ -t 1 ] && can_talk_to_tty; then
     printf '\n  %bStarting setup…%b\n\n' "$bold" "$reset"
-    if [ -t 0 ]; then
-      "$rein" setup || true
-    else
-      "$rein" setup </dev/tty || true
+    if [ ! -t 0 ]; then
+      # exec replaces this shell's fd 0; we're at the end of main so it's fine.
+      if ! exec </dev/tty; then
+        printf '  %bNext:%b run %brein setup%b to sign in and pair your phone.\n' \
+          "$bold" "$reset" "$bold" "$reset"
+        printf '  After that, run %brein%b any time to use the CLI.\n' "$bold" "$reset"
+        return 0
+      fi
+    fi
+    # REINS_INSTALLER=1 → setup uses line-oriented sign-in/pairing (no alt-screen).
+    # Full-screen TUIs are flaky under a pipe-fed installer even after reattach.
+    if ! REINS_INSTALLER=1 "$rein" setup; then
+      printf '\n  %bSetup did not finish.%b Run %brein setup%b to try again.\n' \
+        "$bold" "$reset" "$bold" "$reset"
     fi
   # Anchored: whoami prints "signed in: …" when linked but "Not signed in." when
   # not, and an unanchored grep matches both.
