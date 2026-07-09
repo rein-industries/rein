@@ -3,6 +3,16 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.23] - 2026-07-09
+
+### Changes
+
+- Unexport KeySource (knip broke the release check)
+- Fix biome formatting in tty-input and App.tsx import order
+- Poll /dev/tty directly; stop using tty.ReadStream (macOS setup hang)
+- Site: restore 1-bit dither bands; update privacy contact
+- Site: redraw the bands as a hairline ridge field; workspace shot on mobile
+
 ## [0.1.22] - 2026-07-09
 
 ### Changes
