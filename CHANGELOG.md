@@ -3,6 +3,15 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.27] - 2026-07-10
+
+### Changes
+
+- Remove dead RevenueCat exports, unused Lockup, and stale knip ignore
+- Mobile: bind RevenueCat only after sign-in with durable app user id
+- Add mobile Sentry, loading skeleton polish, and faster rendezvous rejoin
+- Heal wedged transcript viewport and single-fade fold expansion
+
 ## [0.1.26] - 2026-07-10
 
 ### Changes
