@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.29] - 2026-07-10
+
+### Changes
+
+- Fix check: biome formatting + hermetic ACP catalog-cache tests
+- 405e90c2 (#45)
+
 ## [0.1.28] - 2026-07-10
 
 ### Changes
