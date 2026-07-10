@@ -3,6 +3,14 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.30] - 2026-07-10
+
+### Changes
+
+- Free plan: 10 open sessions, 3 running in parallel (#48)
+- Update site positioning copy
+- Update site social share image
+
 ## [0.1.29] - 2026-07-10
 
 ### Changes
