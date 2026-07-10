@@ -3,6 +3,15 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.26] - 2026-07-10
+
+### Changes
+
+- Fix order-dependent mobile test poisoning from partial module mocks
+- Mobile: free app client side, plan gates, archive/import views, fixes
+- Bridge: auto-continue vetoes, task-resume seam, exec exit settling
+- Make the core app free with live plan caps; add demo machine and bug reports
+
 ## [0.1.25] - 2026-07-09
 
 ### Changes
