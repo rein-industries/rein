@@ -3,6 +3,14 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.28] - 2026-07-10
+
+### Changes
+
+- Harden sign-in, post-pair relay handoff, and onboarding install UX
+- Fix EAS release bundling: build Metro config via getSentryExpoConfig
+- Drop the at-cap caption; Create bounces straight to the paywall
+
 ## [0.1.27] - 2026-07-10
 
 ### Changes
