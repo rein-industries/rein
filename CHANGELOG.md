@@ -3,6 +3,18 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.31] - 2026-07-12
+
+### Changes
+
+- Demand-gate pairing codes and the membership probe; 60s code TTL
+- Drop the QR whole on short terminals so the pairing code always wins
+- Fix biome format drift in terminals tab
+- Hold sessions skeleton through resume reconnect grace
+- Hide unavailable providers in the machine provider sheet
+- Fix stranded file picker on bridge reconnect (#46)
+- Fix clipped provider chips on import sheet (#47)
+
 ## [0.1.30] - 2026-07-10
 
 ### Changes
