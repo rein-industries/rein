@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.32] - 2026-07-12
+
+### Changes
+
+- Shield retry-turn tests from process-wide connection-store mocks
+- Stop the DO duration blowout: legacy-TTL compat, cheap rooms, relay escape
+
 ## [0.1.31] - 2026-07-12
 
 ### Changes
