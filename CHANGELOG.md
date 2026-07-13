@@ -3,6 +3,21 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.33] - 2026-07-13
+
+### Changes
+
+- Ferry release binaries via a draft release, not Actions artifacts (#54)
+- Handoff copy: already on your phone, not live (#53)
+- Route www.rein.build/* to the site Worker explicitly (#52)
+- Cap release artifact retention at 1 day (#51)
+- Paywall scrolls in short viewports; sheet keyboard lift reads live window height
+- feat: site handoff (#50)
+- Freeze stale liveness claims when a bridge is unreachable
+- Opaque ground under full-bleed banners
+- Give the response action row more air above the prose
+- Bust the demo image's bridge-install layer on every rebuild
+
 ## [0.1.32] - 2026-07-12
 
 ### Changes
