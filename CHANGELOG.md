@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.40] - 2026-07-14
+
+### Changes
+
+- site: retire the menu bar scene — the DMG is the desktop app, not a toolbar companion
+- uninstall sweeps the Applications folders for Rein.app: a DMG drag-install never wrote a receipt
+
 ## [0.1.39] - 2026-07-14
 
 ### Changes
