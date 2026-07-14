@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.39] - 2026-07-14
+
+### Changes
+
+- Sign the compiled rein binary with JIT entitlements
+
 ## [0.1.38] - 2026-07-14
 
 ### Changes
