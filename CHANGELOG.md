@@ -3,6 +3,42 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.35] - 2026-07-14
+
+### Changes
+
+- mac: sign the DMG container itself
+- mac: per-binary Developer ID signing for the embedded Electron app
+- release: notarize the DMG where package-app.sh actually writes it
+- desktop: register the workspace with knip; unexport file-local helpers
+- mobile: seal the process-wide mock leaks that break mac-order test runs
+- Manual theme survives restart: re-force the trait, boot key outvotes blob
+- The machine is the card: multi-machine wall folds each machine into one shelf
+- No add-machine CLI flash on fresh sign-in
+- Section the wall by machine; unreachable machines trail greyed
+- Streaming can't yank a scrolling reader back to the tail
+- lockfile: add the desktop app's xterm entries
+- desktop: Cursor-class workspace — turn folds, dock, live mirror parity
+- release: add the build-mac-app DMG job
+- desktop: workspace redesign — machine tree, streaming chat, side panel
+- mac: opening Rein opens the chat workspace
+- packaging: build outputs move under .noindex so dev copies stay out of Launchpad
+- mac+desktop: one DMG ships toolbar, bridge, and chat
+- desktop: the chat/workspace client lands as an Electron app
+- desktop: drop the Tauri controller — the Swift toolbar stays
+- desktop: begin the Tauri migration — cross-platform tray controller
+- site+mac: DMG download surface for the Mac-app bridge install
+- mac: park the chat client on mac-chat; the toolbar app ships controller-only
+- mac: restore chat access as a quiet footer action
+- mac: rebuild the chat window Codex-style on the full bridge surface
+- mac: drop the Open Rein Chat row from the popover
+- mac: carry the instrument register through the whole popover
+- mac: redesign the popover header as an instrument row
+- mac: signal pairing demand so the QR actually arms
+- mac: restore the original app from the branched session's event log
+- mac: keep the bridge socket alive and connect at launch
+- mac: rebuild the menu bar app as a native bridge client
+
 ## [0.1.34] - 2026-07-14
 
 ### Changes
