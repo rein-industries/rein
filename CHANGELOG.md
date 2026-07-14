@@ -3,6 +3,14 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.34] - 2026-07-14
+
+### Changes
+
+- Key the ACP catalog cache on CLI/shim versions so upgrades re-probe
+- ci: mac-snapshot ferries PNGs through the log (artifact quota)
+- ci: manual mac-snapshot workflow renders the popover on macos-14
+
 ## [0.1.33] - 2026-07-13
 
 ### Changes
