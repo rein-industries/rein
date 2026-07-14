@@ -54,6 +54,10 @@ main() {
   verify_checksum "$tmp" "$asset"
 
   mkdir -p "$INSTALL_DIR"
+  # The darwin tarballs carry a Rein.app payload (menu bar app). Extracting
+  # over a previous copy would merge the bundles, and stale files break the
+  # app's code-signature seal — replace, never merge.
+  rm -rf "$INSTALL_DIR/Rein.app"
   tar -xzf "$tmp/$asset" -C "$INSTALL_DIR"
   chmod 0755 "$INSTALL_DIR/rein" 2>/dev/null || true
   [ -f "$INSTALL_DIR/spawn-helper" ] && chmod 0755 "$INSTALL_DIR/spawn-helper" 2>/dev/null || true

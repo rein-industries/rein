@@ -3,6 +3,25 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.36] - 2026-07-14
+
+### Changes
+
+- release: the DMG ships without chat while chat is still in development
+- site: the Mac app is included, not a second install
+- rein update swaps every sidecar: stale node_datachannel.node lay in wait
+- The toolbar ships with the CLI: darwin tarballs carry a bare Rein.app
+- An unreachable machine holds its place: the wall classifies on settled status
+- Reorder mode seats its cards under the header, not behind it
+- site: hero button and install box share one baseline; Mac app joins the navbar
+- A dead bridge severs the link, not the chats: offline shelves stay tappable
+- Dead machines surface in seconds: the trying window is two-tier by cause
+- site: round the pressed rein item's highlight in the menu bar scene
+- site: the menu bar scene wears the app's real toolbar icon
+- site: real popover captures land — rendered by the app itself in CI
+- site: decompress the Mac app section
+- site: the Mac app earns its section — menu bar scene + DMG download
+
 ## [0.1.35] - 2026-07-14
 
 ### Changes
