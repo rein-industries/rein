@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.38] - 2026-07-14
+
+### Changes
+
+- The toolbar offer checks the Mac can run it: macOS 14 gates the prompt
+
 ## [0.1.37] - 2026-07-14
 
 ### Changes
