@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.45] - 2026-07-15
+
+### Changes
+
+- mac: gate the pairing QR collapse on the credential roster, not push registrations
+
 ## [0.1.44] - 2026-07-15
 
 ### Changes
