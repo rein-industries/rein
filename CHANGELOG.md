@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.44] - 2026-07-15
+
+### Changes
+
+- Security hardening from cloud Workers audit (#58)
+- Mobile: bump version to 0.1.1 for App Store submission
+
 ## [0.1.43] - 2026-07-15
 
 ### Changes
