@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.43] - 2026-07-15
+
+### Changes
+
+- Bridge: default pairMode to 'open' for the App Store transition
+- Wall rendering: plain LegendList + hairline search border
+
 ## [0.1.42] - 2026-07-15
 
 ### Changes
