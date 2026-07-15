@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.42] - 2026-07-15
+
+### Changes
+
+- Account-match pairing: a bridge admits only its own account
+- Pinned-mode borders flatten in JS on legacy clients, masked by a crossfade
+
 ## [0.1.41] - 2026-07-15
 
 ### Changes
