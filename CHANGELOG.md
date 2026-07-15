@@ -3,6 +3,23 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.41] - 2026-07-15
+
+### Changes
+
+- Fix theme-stuck hairlines on Fabric by painting edges as backgrounds
+- Settings gets a Release card: version (build), bundle id, protocol
+- OTA adoption: embedded-launch boot gate + apply-on-background
+- Machine-cap paywall in /connect replaces the flow, never stacks it
+- site: stack the hero cta at every width — button, step label, command box in one column
+- Reconnecting strips read in light mode: raised surface, full-ink copy
+- New-session connecting beat composed on the EmptyState stage
+- Sessions wall snaps reflows while blurred so rows return unoverlapped
+- Sessions wall holds its rows while blurred so reflows animate attached
+- site: add the "then install the bridge" step label to the hero (#57)
+- Device sign-in page hides the code until you're signed in
+- site: Get Rein For iOS — swap the TestFlight beta button for the App Store link (#56)
+
 ## [0.1.40] - 2026-07-14
 
 ### Changes
