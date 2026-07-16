@@ -3,6 +3,17 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.46] - 2026-07-16
+
+### Changes
+
+- Fix release check: lint, format, and knip fallout from the demo-tour push
+- Bridge updates, replay batching, auto-import, context ring, demo tour, promo app
+- Bridge updates from the app: out-of-date badge + one-tap remote update
+- Mobile: multi-machine wall redesign — machine tabs, flat headers, recency order
+- Mobile: move machine setup out of onboarding to the wall's /connect hand
+- Site: new social share card (phone mockup + headline)
+
 ## [0.1.45] - 2026-07-15
 
 ### Changes
