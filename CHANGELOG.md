@@ -3,6 +3,14 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.47] - 2026-07-17
+
+### Changes
+
+- Bridge: unattended auto-update sweep keeps the daemon current
+- Mobile: machine tabs row sits flush on the wall gutter
+- Mobile: bridge update offer becomes a trailing Update chip on the machine row
+
 ## [0.1.46] - 2026-07-16
 
 ### Changes
