@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.48] - 2026-07-17
+
+### Changes
+
+- Mobile: paste a copied screenshot from the composer's native edit menu
+- Mobile: guard RawProps preparse against non-object payloads (TestFlight SIGABRT)
+
 ## [0.1.47] - 2026-07-17
 
 ### Changes
