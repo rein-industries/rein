@@ -3,6 +3,13 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.49] - 2026-07-20
+
+### Changes
+
+- Bridge: sign pty.node in release tarballs + disable library validation
+- Mobile: bump version to 0.2.1 for the composer paste feature
+
 ## [0.1.48] - 2026-07-17
 
 ### Changes
