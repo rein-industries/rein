@@ -3,6 +3,15 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.50] - 2026-08-02
+
+### Changes
+
+- Mobile: every react-native re-mock spreads one baseline superset
+- Mobile: preload the react-native test mock — deterministic across file order
+- mac: resolve the resource bundle from Contents/Resources — 0.1.49 launch crash
+- Mobile: stop the limited-photos alert on every chat open
+
 ## [0.1.49] - 2026-07-20
 
 ### Changes
