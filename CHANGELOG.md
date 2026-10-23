@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.53] - 2026-10-23
+
+### Changes
+
+- Mobile: drop new-session prompt, tap-to-open versions, keep model lists; desktop: Linux homepage (#63)
+
 ## [0.1.52] - 2026-10-23
 
 ### Changes
