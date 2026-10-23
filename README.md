@@ -7,33 +7,49 @@
   </picture>
 </a>
 
-### Control your coding agents from anywhere.
+### Your coding agents, on your desk and in your pocket.
 
-Rein connects to the agents running on your machine.<br>
-Start at your desk, pick up anywhere.
+Rein for Mac runs your agents with the bridge built in.<br>
+Rein for iPhone takes every session with you.
 
-[**rein.build**](https://rein.build) · [**Download the app**](https://rein.build) · [**Changelog**](https://github.com/rein-industries/rein/blob/main/CHANGELOG.md) · [**npm**](https://www.npmjs.com/package/@rein-industries/rein)
+[**rein.build**](https://rein.build) · [**Rein for Mac**](https://rein.build/dmg) · [**Rein for iPhone**](https://rein.build) · [**Changelog**](https://github.com/rein-industries/rein/blob/main/CHANGELOG.md) · [**npm**](https://www.npmjs.com/package/@rein-industries/rein)
 
 </div>
 
 ---
 
-Rein is two pieces:
+Rein is two apps and the bridge between them:
 
-- **The bridge**, a small daemon on your Mac or Linux machine. It drives the same
-  agent CLIs you already use, with the subscriptions you already pay for, and
-  streams their sessions out over an encrypted connection.
-- **The Rein app** for iPhone. It pairs with your machines and puts live
-  transcripts, permission prompts, diffs, terminals, and dev-server previews in
-  your pocket.
+- **Rein for Mac.** Every session on every machine you pair, in one window:
+  the transcript, diffs, files, a terminal, previews and pull requests beside
+  it. It runs the bridge for you, so on a Mac there's nothing else to install.
+- **Rein for iPhone.** Live transcripts, permission prompts, diffs, terminals,
+  and dev-server previews in your pocket.
+- **The bridge**, a small daemon on the machine where your agents run. It
+  drives the same agent CLIs you already use, with the subscriptions you
+  already pay for, and streams their sessions out over an encrypted
+  connection. Rein for Mac hosts it; on Linux or a server, install it with one
+  command.
+
+One Rein account signs into both apps.
 
 Rein never calls a model API and never touches an API key. Sessions travel peer
 to peer, over encrypted WebRTC or a direct socket on your own network. Rein's
 servers only set up the connection; they never see what moves across it.
 
+## Get the apps
+
+- **Mac:** [Rein.dmg](https://rein.build/dmg) (Apple silicon) or
+  [Rein-Intel.dmg](https://rein.build/dmg/intel). Every session on your
+  desktop, the bridge built in, the `rein` CLI included. Updates itself from
+  the latest release. (Linux: the AppImage on each
+  [release](https://github.com/rein-industries/rein/releases/latest).)
+- **iPhone:** download Rein at [rein.build](https://rein.build).
+
 ## Install the bridge
 
-One command on the machine where your agents run:
+Using Rein for Mac? Skip this: the app runs the bridge. Anywhere else, one
+command on the machine where your agents run:
 
 ```sh
 curl -fsSL rein.build | sh
@@ -72,14 +88,10 @@ verify it against `SHA256SUMS`, extract, and run `./rein setup`.
 
 </details>
 
-## Get the app
-
-Download the Rein app at [rein.build](https://rein.build). iOS first; the
-bridge installs on macOS and Linux.
-
 ## Set up once, then just connect
 
-1. **Install the bridge.** One command. It starts on your machine and shows a QR.
+1. **Open Rein for Mac** (or install the bridge). It starts on your machine and
+   shows a QR.
 2. **Pair the phone.** Scan it. The credential transfers over the direct
    connection.
 3. **Keep working.** Start runs, answer prompts, and review diffs from anywhere.
@@ -247,7 +259,8 @@ Grok. Rein drives the official CLIs over the Agent Client Protocol.
 **What happens when my machine goes offline?** The workspace lets you know.
 Sessions resume and missed events replay when the bridge is back.
 
-**What does it run on?** iOS first. The bridge installs on macOS and Linux.
+**What does it run on?** Rein for Mac on macOS 12 or later, Rein for iPhone on
+iOS. The bridge also installs on Linux.
 
 ## Bugs and feature requests
 

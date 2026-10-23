@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.51] - 2026-10-23
+
+### Changes
+
+- Rein desktop app: Electron client that runs the bridge, replaces the Swift menu-bar app (#61)
+
 ## [0.1.50] - 2026-08-02
 
 ### Changes
