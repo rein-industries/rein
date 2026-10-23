@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.56] - 2026-10-23
+
+### Changes
+
+- Desktop + mobile: transcript renders as cleanly as T3 (markdown, chat, tool calls) (#66)
+
 ## [0.1.55] - 2026-10-23
 
 ### Changes
