@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.55] - 2026-10-23
+
+### Changes
+
+- Bridge: fix 'ws.extensions.includes is not a function' on desktop (#65)
+
 ## [0.1.54] - 2026-10-23
 
 ### Changes
