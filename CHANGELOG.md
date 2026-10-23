@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.52] - 2026-10-23
+
+### Changes
+
+- Desktop release: fix Mac signing and Linux packaging (v0.1.51 shipped without the app) (#62)
+
 ## [0.1.51] - 2026-10-23
 
 ### Changes
