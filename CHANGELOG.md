@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.54] - 2026-10-23
+
+### Changes
+
+- Mobile + desktop: settled turns fold to "Worked for 2m 5s ›", thoughts to one line (#64)
+
 ## [0.1.53] - 2026-10-23
 
 ### Changes
