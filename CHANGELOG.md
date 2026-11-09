@@ -3,6 +3,17 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.57] - 2026-11-09
+
+### Changes
+
+- CI: release builds on macos-15 (macos-14 runners retired) (#72)
+- Mobile: adopt the UIScene life cycle so the app builds on Xcode 27 (#71)
+- Mobile: a resynced transcript re-opens in place instead of going blank (#70)
+- Mobile: bump version to 0.2.2 for TestFlight (#69)
+- Mobile: unblock the release (order-dependent test failures) + quiet diff retries (#68)
+- Mobile: fix expanded folds painting over the transcript; UI/UX pass (#67)
+
 ## [0.1.56] - 2026-10-23
 
 ### Changes
