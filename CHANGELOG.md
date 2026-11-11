@@ -3,6 +3,12 @@
 All notable changes to rein are documented here. Versions match
 GitHub Releases on this repo (built from private source).
 
+## [0.1.58] - 2026-11-11
+
+### Changes
+
+- Sync reliability: images by reference, saner resync, one bridge per machine, link fixes (#73)
+
 ## [0.1.57] - 2026-11-09
 
 ### Changes
